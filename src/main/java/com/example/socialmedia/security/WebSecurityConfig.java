@@ -70,6 +70,7 @@ public class WebSecurityConfig {
                         ((AuthorizeHttpRequestsConfigurer.AuthorizedUrl)
                                 requests.
                                         requestMatchers("/api/auth/**").permitAll().
+//                                        requestMatchers("/api/auth/signin").permitAll().
                                         requestMatchers("/v3/api-docs/**").permitAll().
                                         requestMatchers("/h2-console/**").permitAll().
                                         requestMatchers("/swagger-ui/**").permitAll().

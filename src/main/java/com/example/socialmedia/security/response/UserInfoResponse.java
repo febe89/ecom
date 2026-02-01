@@ -14,4 +14,10 @@ public class UserInfoResponse {
     private String username;
     private String jwtToken;
     private List<String> roles;
+
+    public UserInfoResponse(Long id, List<String> roles, String username) {
+        this.id = id;
+        this.roles = roles;
+        this.username = username;
+    }
 }

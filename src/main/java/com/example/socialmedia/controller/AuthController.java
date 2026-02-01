@@ -11,8 +11,11 @@ import com.example.socialmedia.security.request.SignupRequest;
 import com.example.socialmedia.security.response.MessageResponse;
 import com.example.socialmedia.security.response.UserInfoResponse;
 import com.example.socialmedia.security.service.UserDetailsImpl;
+import com.sun.net.httpserver.Headers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -58,9 +61,9 @@ public class AuthController {
         List<String> roles = authentication.getAuthorities()
                 .stream().map(item -> item.getAuthority())
                 .toList();
-        String jwt = jwtUtils.generateTokenFromUsername(userDetails);
-        UserInfoResponse response = new UserInfoResponse(userDetails.getId(), userDetails.getUsername(), jwt, roles);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
+        UserInfoResponse response = new UserInfoResponse(userDetails.getId(), roles,userDetails.getUsername());
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString()).body(response);
     }
 
     @PostMapping("/signup")
