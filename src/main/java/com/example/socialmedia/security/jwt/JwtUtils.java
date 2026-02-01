@@ -41,6 +41,11 @@ public class JwtUtils {
                 .path("/api").maxAge(24*60*60).httpOnly(false).build();
         return cookie;
     }
+    public ResponseCookie getCleanJwtCookie(){
+        ResponseCookie cookie= ResponseCookie.from(jwtCookie,null)
+                .path("/api").build();
+        return cookie;
+    }
 
     public String getJwtFromCookies(HttpServletRequest request) {
         Cookie cookie= WebUtils.getCookie(request,jwtCookie);
